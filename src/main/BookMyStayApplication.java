@@ -1,39 +1,46 @@
 package main;
 
-import main.model.Service;
-import main.service.AddOnServiceManager;
+import main.model.Reservation;
+import main.service.BookingHistoryService;
 
 public class BookMyStayApplication {
 
     public static void main(String[] args) {
 
-        AddOnServiceManager serviceManager =
-                new AddOnServiceManager();
+        BookingHistoryService historyService =
+                new BookingHistoryService();
 
-        String reservationId = "S1";
+        Reservation reservation1 =
+                new Reservation(
+                        "Anbu",
+                        "Single");
 
-        serviceManager.addService(
-                reservationId,
-                new Service(
-                        "Breakfast",
-                        500));
+        Reservation reservation2 =
+                new Reservation(
+                        "Raj",
+                        "Double");
 
-        serviceManager.addService(
-                reservationId,
-                new Service(
-                        "Spa",
-                        1500));
+        Reservation reservation3 =
+                new Reservation(
+                        "Kumar",
+                        "Suite");
 
-        serviceManager.addService(
-                reservationId,
-                new Service(
-                        "Airport Pickup",
-                        800));
+        historyService.addReservation(
+                reservation1);
 
-        serviceManager.displayServices(
-                reservationId);
+        historyService.addReservation(
+                reservation2);
 
-        serviceManager.displayTotalServiceCost(
-                reservationId);
+        historyService.addReservation(
+                reservation3);
+
+        historyService.displayBookingHistory();
+
+        historyService.cancelReservation(
+                "Raj");
+
+        historyService.displayBookingHistory();
+
+        historyService.generateReport();
     }
 }
