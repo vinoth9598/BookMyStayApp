@@ -1,67 +1,39 @@
 package main;
 
-import main.model.Reservation;
-import main.service.InventoryService;
-import main.service.ReservationConfirmationService;
+import main.model.Service;
+import main.service.AddOnServiceManager;
 
 public class BookMyStayApplication {
 
     public static void main(String[] args) {
 
-        InventoryService inventoryService =
-                new InventoryService();
+        AddOnServiceManager serviceManager =
+                new AddOnServiceManager();
 
-        inventoryService.addRoomType(
-                "Single",
-                2,
-                2500,
-                "WiFi, TV");
+        String reservationId = "S1";
 
-        inventoryService.addRoomType(
-                "Double",
-                1,
-                4500,
-                "WiFi, TV, Breakfast");
+        serviceManager.addService(
+                reservationId,
+                new Service(
+                        "Breakfast",
+                        500));
 
-        ReservationConfirmationService
-                confirmationService =
-                new ReservationConfirmationService(
-                        inventoryService.getRoomInventory());
+        serviceManager.addService(
+                reservationId,
+                new Service(
+                        "Spa",
+                        1500));
 
-        Reservation reservation1 =
-                new Reservation(
-                        "Anbu",
-                        "Single");
+        serviceManager.addService(
+                reservationId,
+                new Service(
+                        "Airport Pickup",
+                        800));
 
-        Reservation reservation2 =
-                new Reservation(
-                        "Raj",
-                        "Single");
+        serviceManager.displayServices(
+                reservationId);
 
-        Reservation reservation3 =
-                new Reservation(
-                        "Kumar",
-                        "Single");
-
-        confirmationService
-                .confirmReservation(
-                        reservation1);
-
-        confirmationService
-                .confirmReservation(
-                        reservation2);
-
-        confirmationService
-                .confirmReservation(
-                        reservation3);
-
-        confirmationService
-                .displayAllocatedRooms();
-
-        confirmationService
-                .displayBookedRoomIds();
-
-        inventoryService
-                .displayInventory();
+        serviceManager.displayTotalServiceCost(
+                reservationId);
     }
 }
