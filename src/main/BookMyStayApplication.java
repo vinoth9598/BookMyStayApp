@@ -1,43 +1,38 @@
 package main;
 
-import main.service.InventoryService;
-import main.service.SearchService;
+import main.service.BookingQueueService;
 
 public class BookMyStayApplication {
 
     public static void main(String[] args) {
 
-        InventoryService inventoryService =
-                new InventoryService();
+        BookingQueueService bookingService =
+                new BookingQueueService();
 
-        inventoryService.addRoomType(
-                "Single",
-                20,
-                2500,
-                "WiFi, TV");
+        bookingService.addBookingRequest(
+                "Anbu",
+                "Single");
 
-        inventoryService.addRoomType(
-                "Double",
-                15,
-                4500,
-                "WiFi, TV, Breakfast");
+        bookingService.addBookingRequest(
+                "Raj",
+                "Double");
 
-        inventoryService.addRoomType(
-                "Suite",
-                0,
-                9000,
-                "WiFi, TV, Spa Access");
+        bookingService.addBookingRequest(
+                "Kumar",
+                "Suite");
 
-        SearchService searchService =
-                new SearchService(
-                        inventoryService.getRoomInventory());
-
-        searchService.displayAvailableRooms();
-
-        searchService.searchRoom("Double");
+        bookingService.displayWaitingRequests();
 
         System.out.println(
-                "\nIs Suite Available ? "
-                        + searchService.isRoomAvailable("Suite"));
+                "\nPending Requests : "
+                        + bookingService.getPendingRequestCount());
+
+        System.out.println(
+                "\nProcessing Requests...");
+
+        bookingService.processNextRequest();
+        bookingService.processNextRequest();
+
+        bookingService.displayWaitingRequests();
     }
 }
