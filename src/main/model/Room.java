@@ -5,11 +5,13 @@ public class Room {
     private String roomType;
     private int availableCount;
     private double pricePerNight;
+    private String amenities;
 
-    public Room(String roomType, int availableCount, double pricePerNight) {
+    public Room(String roomType, int availableCount, double pricePerNight, String amenities) {
         this.roomType = roomType;
         this.availableCount = availableCount;
         this.pricePerNight = pricePerNight;
+        this.amenities = amenities;
     }
 
     public String getRoomType() {
@@ -32,10 +34,15 @@ public class Room {
         this.pricePerNight = pricePerNight;
     }
 
+    public String getAmenities() {
+        return amenities;
+    }
+
     @Override
     public String toString() {
-        return "Room Type: " + roomType +
-                ", Available: " + availableCount +
-                ", Price/Night: ₹" + pricePerNight;
+        return "Room Type : " + roomType +
+                "\nAvailable Rooms : " + availableCount +
+                "\nPrice Per Night : ₹" + pricePerNight +
+                "\nAmenities : " + amenities;
     }
 }
