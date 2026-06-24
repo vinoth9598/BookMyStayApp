@@ -1,38 +1,67 @@
 package main;
 
-import main.service.BookingQueueService;
+import main.model.Reservation;
+import main.service.InventoryService;
+import main.service.ReservationConfirmationService;
 
 public class BookMyStayApplication {
 
     public static void main(String[] args) {
 
-        BookingQueueService bookingService =
-                new BookingQueueService();
+        InventoryService inventoryService =
+                new InventoryService();
 
-        bookingService.addBookingRequest(
-                "Anbu",
-                "Single");
+        inventoryService.addRoomType(
+                "Single",
+                2,
+                2500,
+                "WiFi, TV");
 
-        bookingService.addBookingRequest(
-                "Raj",
-                "Double");
+        inventoryService.addRoomType(
+                "Double",
+                1,
+                4500,
+                "WiFi, TV, Breakfast");
 
-        bookingService.addBookingRequest(
-                "Kumar",
-                "Suite");
+        ReservationConfirmationService
+                confirmationService =
+                new ReservationConfirmationService(
+                        inventoryService.getRoomInventory());
 
-        bookingService.displayWaitingRequests();
+        Reservation reservation1 =
+                new Reservation(
+                        "Anbu",
+                        "Single");
 
-        System.out.println(
-                "\nPending Requests : "
-                        + bookingService.getPendingRequestCount());
+        Reservation reservation2 =
+                new Reservation(
+                        "Raj",
+                        "Single");
 
-        System.out.println(
-                "\nProcessing Requests...");
+        Reservation reservation3 =
+                new Reservation(
+                        "Kumar",
+                        "Single");
 
-        bookingService.processNextRequest();
-        bookingService.processNextRequest();
+        confirmationService
+                .confirmReservation(
+                        reservation1);
 
-        bookingService.displayWaitingRequests();
+        confirmationService
+                .confirmReservation(
+                        reservation2);
+
+        confirmationService
+                .confirmReservation(
+                        reservation3);
+
+        confirmationService
+                .displayAllocatedRooms();
+
+        confirmationService
+                .displayBookedRoomIds();
+
+        inventoryService
+                .displayInventory();
     }
 }
